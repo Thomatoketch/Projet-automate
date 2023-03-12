@@ -3,13 +3,13 @@ import numpy as np
 
 def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_automate, num_symbole, num_etat):
     trigger = 0
-    mark = 0
+    
     # vérifier si l'automate est déterministe
     for each in table_matrix:
         for i in each:
             if len(i) > 1:
                 trigger = 1
-                mark = i
+                
                 break
         if trigger == 1:
             break
