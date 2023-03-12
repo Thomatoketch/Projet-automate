@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_automate, num_symbole, num_etat):
     trigger = 0
     
