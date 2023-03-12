@@ -119,3 +119,13 @@ for g in range(nbr_etats+1):
                 f"{i:*^9d}"
                 print(f"{table_std[g][h]:^4}", end=' | ')
     print("")
+
+
+#Créer une nouvelle matrice vide pour les transitions de déterministe
+new_table = [[""] * nbr_symbole for i in range(nbr_etats)]
+
+#Déterminisation
+nouvelle_matrice_déterminisation = determinisation(etat_initiaux, table_transition, new_table, numero, nbr_symbole, nbr_etats)
+
+#Affichage de la table de déterminisation
+affichage_table_déterminisation(nouvelle_matrice_déterminisation[1], nouvelle_matrice_déterminisation[0], nbr_symbole)
