@@ -6,8 +6,8 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
         for i in each:
             if len(i) > 1:
                 trigger = 1
-                
                 break
+                
         if trigger == 1:
             break
 
