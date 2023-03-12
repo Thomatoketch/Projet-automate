@@ -17,7 +17,8 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
     if trigger == 0:
         etats_originaux = [x for x in range(num_etat)]
         print(f"L'automate {numero_automate} est déjà déterministe")
-
+        
+        #compléter l'automate avec l'etat poubelle
         table_matrix = compléter_etat_poubelle(table_matrix, etats_originaux, num_symbole)
         return table_matrix, etats_originaux
 
