@@ -34,10 +34,11 @@ table_transition = [[""] * nbr_symbole for i in range(nbr_etats)]
 # Ajouter les transitions
 for i in range(nbr_transition):
     transition = lignes[6+i].strip()
-    etat_depart = int(transition[0])
+    etat_depart = transition[0]
+    num_depart = int(etat_depart)
     symbole = ord(transition[1]) - ord('a')
-    etat_arrivee = int(transition[2])
-    table_transition[etat_depart][symbole] = etat_arrivee
+    etat_arrivee = transition[2]
+    table_transition[num_depart][symbole] += etat_arrivee
 
 # Afficher la table de transition
 print("Table de transition:")
