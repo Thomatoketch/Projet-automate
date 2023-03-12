@@ -1,42 +1,20 @@
-def trouver_etat(etat,nbLigne,lignes):
-    i = 0
-    debut_etat = ""
-    while debut_etat != ' ':
-        debut_etat = lignes[nbLigne][i]
-        i += 1
-    while i < len(lignes[nbLigne]) - 1:
-        temp = ""
-        while lignes[nbLigne][i] != " " and i < len(lignes[nbLigne]) - 1:
-            temp += lignes[nbLigne][i]
-            i += 1
-        etat.append(int(temp))
-        i += 1
+def est_deterministe (table,nbr_initial):
 
-# creation de la matrice vide
-def creation_matrice_vide(nbr_etats,nbr_symbole):
-    matrice = []
-    for g in range(nbr_etats):
-        ligne = []
-        for h in range(nbr_symbole):
-            ligne.append('')
-        matrice.append(ligne)
-    return matrice
+    for i in range (len(table)):
+        for j in range (len(table[i])):
+            if len(table[i][j])>1:
+                print("Cet automate n'est pas déterministe car il ne possède pas au plus 1 transition pour un état ")
+            if nbr_initial > 1:
+                print("Cet automate n'est pas déterministe car il possède plusieurs états initiaux")
 
-def affichage_matrice(table,nbr_etats,nbr_symbole):
-    for g in range(nbr_etats+1):
-        if g == nbr_etats:
-            print("\n\n\n")
-            print("i", end='| ')
-            for h in range(nbr_symbole):
-                if table[g][h] == "":
-                    print("--", end=' | ')
-                else:
-                    print(table[g][h], end=' | ')
-        else:
-            print(g, end='| ')
-            for h in range(nbr_symbole):
-                if table[g][h] == "":
-                    print("--", end=' | ')
-                else:
-                    print(table[g][h], end=' | ')
-        print("")
+
+def est_complet (table):
+    k=0
+    for i in range (len(table)):
+        for j in range (len(table[i])):
+            if table[i][j]=='':
+                k=k+1
+    if k>0:
+        print("cet automate n'est pas complet car il possède des états vides ")
+    else:
+        print("Cet automate est complet")
