@@ -1,5 +1,6 @@
 import os
 from fonction import *
+from determinisation import *
 
 liste = os.listdir("Fichier TXT") # dir is your directory path
 number_files = len(liste)
@@ -9,7 +10,7 @@ while int(numero) > number_files:
     print("Il y a ",number_files, " fichiers. Quel fichier voulez vous ouvrir ? ")
     numero = input()
 
-file_path = "Fichier TXT/F1-"+numero+".txt"
+file_path = "Fichier TXT/F3-"+numero+".txt"
 
 # Lire le contenu du fichier sélectionné
 with open(file_path, "r") as f:
@@ -25,7 +26,6 @@ nbr_transition = int(lignes[4].strip())
 
 print("les etats initiaux sont :",etat_initiaux)
 print("les etats terminaux sont :",etat_finaux)
-print("la table de transitions est :")
 
 
 # Créer une table de transition vide
@@ -34,19 +34,19 @@ table_transition = [[""] * nbr_symbole for i in range(nbr_etats)]
 # Ajouter les transitions
 for i in range(nbr_transition):
     transition = lignes[6+i].strip()
-    etat_depart = transition[0]
-    num_depart = int(etat_depart)
+    etat_depart = int(transition[0])
     symbole = ord(transition[1]) - ord('a')
-    etat_arrivee = transition[2]
-    table_transition[num_depart][symbole] += etat_arrivee
+    etat_arrivee = int(transition[2])
+    table_transition[etat_depart][symbole] = etat_arrivee
 
 # Afficher la table de transition
 print("Table de transition:")
-print("  | " + " | ".join([f"{chr(i + ord('a')):^4}"for i in range(nbr_symbole)]))
-print("--+" + "+".join(["------" for i in range(nbr_symbole)]))
+print("------" + "-".join(["------" for i in range(nbr_symbole)])+"-")
+print("     | " + " | ".join([f"{chr(i + ord('a')):^4}"for i in range(nbr_symbole)]) + " | ")
+print("-----+" + "+".join(["------" for i in range(nbr_symbole)])+"-")
 
 for g in range(nbr_etats):
-    print(g, end=' | ')
+    print(f"{g:^4}", end=' | ')
     for h in range(nbr_symbole):
         if table_transition[g][h] == "":
             print(f"{'--':^4}", end=' | ')
@@ -62,14 +62,14 @@ if nbr_initial > 1:
             if etat_initiaux[i] in etat_finaux:
                 etat_finaux.append("i")
 
-        for i in range(6,len(lignes)-1):
+        for i in range(6,len(lignes)):
             for j in etat_initiaux:
                 if lignes[i][0] == str(j) :
                     lignes.append("\ni"+lignes[i][1:3])
         etat_initiaux = ["i"]
 
 
-with open("Fichier TXT STD/F1-" + numero + "-std.txt", "w") as fichier:
+with open("Fichier TXT STD/F3-" + numero + "-std.txt", "w") as fichier:
     if nbr_initial > 1 :
         lignes[1] = str(int(lignes[1])+1) + "\n"
         lignes[2] = "1 i\n"
@@ -81,7 +81,7 @@ with open("Fichier TXT STD/F1-" + numero + "-std.txt", "w") as fichier:
 table_std = [[""] * nbr_symbole for i in range(nbr_etats+1)]
 
 
-with open("Fichier TXT STD/F1-" + numero + "-std.txt", "r") as fichier:
+with open("Fichier TXT STD/F3-" + numero + "-std.txt", "r") as fichier:
     lignes = fichier.readlines()
 
 #remplissage matrice
@@ -96,11 +96,12 @@ for h in range(6,len(lignes)):
     else :
         table_std[i][j] += lignes[h][2]
 
+# Afficher la table standardisée
 print("\nTable de la matrice standardisée : ")
-print("  | " + " | ".join([f"{chr(i + ord('a')):^4}"for i in range(nbr_symbole)]))
-print("--+" + "+".join(["------" for i in range(nbr_symbole)]))
+print("------" + "-".join(["------" for i in range(nbr_symbole)])+"-")
+print("     | " + " | ".join([f"{chr(i + ord('a')):^4}"for i in range(nbr_symbole)]) + " | ")
+print("-----+" + "+".join(["------" for i in range(nbr_symbole)])+"-")
 
-#affichage temporaire matrice
 for g in range(nbr_etats+1):
     if g == nbr_etats and nbr_initial == 1 :
         break
@@ -112,15 +113,16 @@ for g in range(nbr_etats+1):
             else:
                 print(f"{table_std[g][h]:^4}", end=' | ')
     else :
-        print(g, end=' | ')
+        print(f"{g:^4}", end=' | ')
         for h in range(nbr_symbole):
             if table_std[g][h] == "":
                 print(f"{'--':^4}", end=' | ')
             else:
-                f"{i:*^9d}"
                 print(f"{table_std[g][h]:^4}", end=' | ')
     print("")
 
+est_deterministe (table_std,nbr_initial)
+est_complet (table_std)
 
 #Créer une nouvelle matrice vide pour les transitions de déterministe
 new_table = [[""] * nbr_symbole for i in range(nbr_etats)]
