@@ -129,6 +129,20 @@ new_table = [[""] * nbr_symbole for i in range(nbr_etats)]
 
 #Déterminisation
 nouvelle_matrice_déterminisation = determinisation(etat_initiaux, table_transition, new_table, numero, nbr_symbole, nbr_etats)
+#nouveaux_etats déterministes
+nouveaux_etats = [str(x) for x in nouvelle_matrice_déterminisation[1]]
 
-#Affichage de la table de déterminisation
-affichage_table_déterminisation(nouvelle_matrice_déterminisation[1], nouvelle_matrice_déterminisation[0], nbr_symbole)
+
+#Les états entrees et sorties déterministe
+nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats)
+#L'état initial
+nouvelle_etats_sorties_déterministe[0] += "E"
+
+#affichage de table déterministe
+affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, nouvelle_etats_sorties_déterministe,1)
+
+#complément
+etat_entree_sorties_complement = complément(nouvelle_etats_sorties_déterministe)
+
+#affichage de table complémentaire
+affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, etat_entree_sorties_complement,2)
