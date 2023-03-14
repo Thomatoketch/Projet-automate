@@ -2,7 +2,7 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
     trigger = 0
     
     # vérifier si l'automate est déterministe
-    for each in table_matrix:
+    for each in str(table_matrix):
         for i in each:
             if len(i) > 1:
                 trigger = 1
