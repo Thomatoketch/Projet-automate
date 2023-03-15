@@ -1,6 +1,7 @@
 import os
 from fonction import *
 from determinisation import *
+from Reconnaissance import *
 
 liste = os.listdir("Fichier TXT") # dir is your directory path
 number_files = len(liste)
