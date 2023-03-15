@@ -142,3 +142,9 @@ etat_entree_sorties_complement = complément(nouvelle_etats_sorties_déterminist
 
 #affichage de table complémentaire
 affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, etat_entree_sorties_complement,2)
+
+
+#La reconnaissance de mot
+mot = input("Inserer le mot pour l'automate")
+etats_sorties = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats)
+reconnaissance_mots(nouveaux_etats, mot, nouvelle_matrice_déterminisation[0], etats_sorties)
