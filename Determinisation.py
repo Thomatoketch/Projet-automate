@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_automate, num_symbole, num_etat):
     trigger = 0
     mark = 0
@@ -83,13 +80,13 @@ def affichage_table_déterminisation(table_etat, matrice_déterminisation, num_s
     indice = "déterministe" if indice ==1 else "complément"
     print(f"\nTable de l'automate {indice} :\n ")
 
-    print("--------------------------")
+    print("--------------"+"------"*num_symbole)
     print("|{:^5}|{:^6}|".format("E/S","ETAT"),end="")
     for k in range(num_symbole):
         letter = chr(k+97)
         print(f"{letter:^5}", end="|")
     print("")
-    print("--------------------------")
+    print("--------------"+"------"*num_symbole)
 
     index = 0
     for each in table_etat:
@@ -100,24 +97,32 @@ def affichage_table_déterminisation(table_etat, matrice_déterminisation, num_s
             print(f"{i:^5}", end="|")
         print("")
         index += 1
-    print("--------------------------")
+    print("--------------"+"------"*num_symbole)
 
 #Les états entrees et sorties déterministe
 def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe):
 
     etats_entree_sorties_déterministe = []
+    toggle = 0
+
     for each in etat_sortie:
         each = str(each)
+        index = 0
         for i in table_etat_déterministe:
-            if each in i:
-                etats_entree_sorties_déterministe.append("S")
-            else:
-                etats_entree_sorties_déterministe.append("")
 
+            if toggle == 0:
+                if each in i:
+                    etats_entree_sorties_déterministe.append("S")
+                else:
+                    etats_entree_sorties_déterministe.append("")
+            elif each in i and etats_entree_sorties_déterministe[index] == "":
+
+                    etats_entree_sorties_déterministe[index] += "S"
+        toggle = 1
 
     return etats_entree_sorties_déterministe
 
-def complément(etat_entree_sortie):
+def automate_complément(etat_entree_sortie):
 
     index = 0
     for each in etat_entree_sortie:
