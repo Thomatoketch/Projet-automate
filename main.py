@@ -84,17 +84,13 @@ table_std = [[""] * nbr_symbole for i in range(nbr_etats+1)]
 with open("Fichier TXT STD/F3-" + numero + "-std.txt", "r") as fichier:
     lignes = fichier.readlines()
 
-#remplissage matrice
-for h in range(6,len(lignes)):
-    if 'i' == lignes[h][0] :
-        i = nbr_etats
-    else :
-        i = int(lignes[h][0])
-    j = 97-ord(lignes[h][1])
-    if table_std[i][j] == "":
-        table_std[i][j] = lignes[h][2]
-    else :
-        table_std[i][j] += lignes[h][2]
+# Ajouter les transitions
+for i in range(nbr_transition):
+    transition = lignes[6+i].strip()
+    etat_depart = int(transition[0])
+    symbole = ord(transition[1]) - ord('a')
+    etat_arrivee = transition[2]
+    table_std[etat_depart][symbole] += etat_arrivee
 
 # Afficher la table standardisée
 print("\nTable de la matrice standardisée : ")
