@@ -17,6 +17,7 @@ file_path = "Fichier TXT/F3-"+numero+".txt"
 with open(file_path, "r") as f:
     lignes = f.readlines()
 
+
 nbr_symbole = int(lignes[0].strip())
 nbr_etats = int(lignes[1].strip())
 nbr_initial = int(lignes[2][0].strip())
@@ -24,6 +25,16 @@ etat_initiaux = list(map(int, lignes[2][1:].strip().split()))
 nbr_final = int(lignes[3][0].strip())
 etat_finaux = list(map(int, lignes[3][1:].strip().split()))
 nbr_transition = int(lignes[4].strip())
+
+
+#table des etats d'entrée et sorties
+table_entrée_sortie = [""] * nbr_etats
+for i in range(nbr_etats):
+    if i in etat_finaux:
+        table_entrée_sortie[i] = "S"
+    if i in etat_initiaux:
+        table_entrée_sortie[i] += "E"
+
 
 print("les etats initiaux sont :",etat_initiaux)
 print("les etats terminaux sont :",etat_finaux)
@@ -37,23 +48,13 @@ for i in range(nbr_transition):
     transition = lignes[6+i].strip()
     etat_depart = int(transition[0])
     symbole = ord(transition[1]) - ord('a')
-    etat_arrivee = int(transition[2])
-    table_transition[etat_depart][symbole] = etat_arrivee
+    etat_arrivee = transition[2]
+    table_transition[etat_depart][symbole] += etat_arrivee
 
-# Afficher la table de transition
+
 print("Table de transition:")
-print("------" + "-".join(["------" for i in range(nbr_symbole)])+"-")
-print("     | " + " | ".join([f"{chr(i + ord('a')):^4}"for i in range(nbr_symbole)]) + " | ")
-print("-----+" + "+".join(["------" for i in range(nbr_symbole)])+"-")
+affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_transition)
 
-for g in range(nbr_etats):
-    print(f"{g:^4}", end=' | ')
-    for h in range(nbr_symbole):
-        if table_transition[g][h] == "":
-            print(f"{'--':^4}", end=' | ')
-        else:
-            print(f"{table_transition[g][h]:^4}", end=' | ')
-    print("")
 
 # Standardiser l'automate si nécessaire
 if nbr_initial > 1:
@@ -93,30 +94,9 @@ for i in range(nbr_transition):
     etat_arrivee = transition[2]
     table_std[etat_depart][symbole] += etat_arrivee
 
-# Afficher la table standardisée
-print("\nTable de la matrice standardisée : ")
-print("------" + "-".join(["------" for i in range(nbr_symbole)])+"-")
-print("     | " + " | ".join([f"{chr(i + ord('a')):^4}"for i in range(nbr_symbole)]) + " | ")
-print("-----+" + "+".join(["------" for i in range(nbr_symbole)])+"-")
 
-for g in range(nbr_etats+1):
-    if g == nbr_etats and nbr_initial == 1 :
-        break
-    if g == nbr_etats:
-        print("i", end=' | ')
-        for h in range(nbr_symbole):
-            if table_std[g][h] == "":
-                print(f"{'--':^4}", end=' | ')
-            else:
-                print(f"{table_std[g][h]:^4}", end=' | ')
-    else :
-        print(f"{g:^4}", end=' | ')
-        for h in range(nbr_symbole):
-            if table_std[g][h] == "":
-                print(f"{'--':^4}", end=' | ')
-            else:
-                print(f"{table_std[g][h]:^4}", end=' | ')
-    print("")
+print("\nTable de la matrice standardisée : ")
+affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_transition)
 
 est_deterministe (table_std,nbr_initial)
 est_complet (table_std)
