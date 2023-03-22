@@ -21,7 +21,7 @@ def est_complet (table):
         print("Cet automate est complet")
 
 
-def affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_std):
+def affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_std,std):
     print("-------" + "-".join(["------" for i in range(nbr_symbole + 1)]) + "-")
     print("|{:^5}|{:^6}|".format("E/S", "ETAT"), end="")
     for k in range(nbr_symbole):
@@ -31,10 +31,10 @@ def affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table
     print("------+" + "+".join(["------" for i in range(nbr_symbole + 1)]) + "-")
 
     for g in range(nbr_etats):
-        print(f"|{table_entrée_sortie[g]:^5}", end="| ")
-        if g == nbr_etats and nbr_initial == 1:
+        if g == nbr_etats-1 and nbr_initial == 1:
             break
-        if g == nbr_etats:
+        print(f"|{table_entrée_sortie[g]:^5}", end="| ")
+        if g == nbr_etats-1 and std == 1:
             print(f"{'i':^4}", end=' | ')
             for h in range(nbr_symbole):
                 if table_std[g][h] == "":
