@@ -53,7 +53,7 @@ for i in range(nbr_transition):
 
 
 print("Table de transition:")
-affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_transition)
+affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_transition,0)
 
 
 # Standardiser l'automate si nécessaire
@@ -70,33 +70,47 @@ if nbr_initial > 1:
                     lignes.append("\ni"+lignes[i][1:3])
         etat_initiaux = ["i"]
 
+    with open("Fichier TXT STD/F3-" + numero + "-std.txt", "w") as fichier:
+        if nbr_initial > 1 :
+            lignes[1] = str(int(lignes[1])+1) + "\n"
+            lignes[2] = "1 i\n"
+            lignes[4] = str(len(lignes) - 6) + "\n"
+        for i in range(len(lignes)) :
+            fichier.write(str(lignes[i]))
 
-with open("Fichier TXT STD/F3-" + numero + "-std.txt", "w") as fichier:
-    if nbr_initial > 1 :
-        lignes[1] = str(int(lignes[1])+1) + "\n"
-        lignes[2] = "1 i\n"
-        lignes[4] = str(len(lignes) - 6) + "\n"
-    for i in range(len(lignes)) :
-        fichier.write(str(lignes[i]))
+    table_std = [[""] * nbr_symbole for i in range(nbr_etats+1)]
 
+    with open("Fichier TXT STD/F3-" + numero + "-std.txt", "r") as fichier:
+        lignes = fichier.readlines()
 
-table_std = [[""] * nbr_symbole for i in range(nbr_etats+1)]
+    nbr_transition = int(lignes[4].strip())
 
+    # Ajouter les transitions
+    for i in range(nbr_transition):
+        transition = lignes[6+i].strip()
+        if type(transition[0]) != int:
+            etat_depart = nbr_etats-1
+        else :
+            etat_depart = int(transition[0])
+        symbole = ord(transition[1]) - ord('a')
+        etat_arrivee = transition[2]
+        table_std[etat_depart][symbole] += etat_arrivee
 
-with open("Fichier TXT STD/F3-" + numero + "-std.txt", "r") as fichier:
-    lignes = fichier.readlines()
+    nbr_etats_std = nbr_etats+1
 
-# Ajouter les transitions
-for i in range(nbr_transition):
-    transition = lignes[6+i].strip()
-    etat_depart = int(transition[0])
-    symbole = ord(transition[1]) - ord('a')
-    etat_arrivee = transition[2]
-    table_std[etat_depart][symbole] += etat_arrivee
-
-
-print("\nTable de la matrice standardisée : ")
-affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_transition)
+    # Mise a jour de la table des etats d'entrée et sorties
+    table_entrée_sortie_std = [""] * nbr_etats_std
+    for i in range(nbr_etats_std):
+        if i in etat_finaux:
+            table_entrée_sortie_std[i] = "S"
+        if i == nbr_etats_std-1 :
+            table_entrée_sortie_std[i] += "E"
+    print(table_entrée_sortie)
+    print(table_entrée_sortie_std)
+    print("\nTable de la matrice standardisée : ")
+    affichage_table(nbr_etats_std,table_entrée_sortie_std,nbr_initial,nbr_symbole,table_std,1)
+    
+    
 
 est_deterministe (table_std,nbr_initial)
 est_complet (table_std)
