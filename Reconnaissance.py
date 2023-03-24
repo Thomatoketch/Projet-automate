@@ -1,4 +1,4 @@
-def reconnaissance_mots(nouveaux_etats, mot, table_transition, etat_sorties):
+def reconnaissance_mots(nouveaux_etats, mot, table_transition, etat_sorties,nbr_symbole):
 
     #créer une dictionnaire pour indexer chaque état
     dictionnaire_etat = {}
@@ -11,6 +11,11 @@ def reconnaissance_mots(nouveaux_etats, mot, table_transition, etat_sorties):
 
     #Parcourir le mot par la table de transition
     for i in range(len(mot)):
+
+        if (ord(mot[i])-97) >= nbr_symbole:
+
+            print("Le mot n'est pas connaissable par l'automate")
+            return
 
         buffer = table_transition[dictionnaire_etat.get(buffer)][ord(mot[i])-97]
         if buffer == "P":
