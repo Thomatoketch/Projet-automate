@@ -1,19 +1,26 @@
 def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_automate, num_symbole, num_etat):
     trigger = 0
-    mark = 0
+
+
+
     # vérifier si l'automate est déterministe
     for each in table_matrix:
+
+        if len(etat_initiaux) != 1:
+            trigger = 1
+            break
+
         for i in each:
             if len(i) > 1:
                 trigger = 1
-                mark = i
+
                 break
         if trigger == 1:
             break
 
     if trigger == 0:
         etats_originaux = [x for x in range(num_etat)]
-        print(f"L'automate {numero_automate} est déjà déterministe")
+        print(f"L'autom+ate {numero_automate} est déjà déterministe")
 
         table_matrix = compléter_etat_poubelle(table_matrix, etats_originaux, num_symbole)
         return table_matrix, etats_originaux
@@ -25,7 +32,7 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
     # Fusionner les états initiaux
     if (len(etat_initiaux) > 1):
         for each in etat_initiaux:
-            new_etat_initiaux.join(each)
+            new_etat_initiaux += str(each)
     else:
         new_etat_initiaux = f"{etat_initiaux[0]}"
 
@@ -80,24 +87,24 @@ def affichage_table_déterminisation(table_etat, matrice_déterminisation, num_s
     indice = "déterministe" if indice ==1 else "complément"
     print(f"\nTable de l'automate {indice} :\n ")
 
-    print("--------------"+"------"*num_symbole)
-    print("|{:^5}|{:^6}|".format("E/S","ETAT"),end="")
+    print("-----------------"+"------"*num_symbole)
+    print("|{:^5}|{:^9}|".format("E/S","ETAT"),end="")
     for k in range(num_symbole):
         letter = chr(k+97)
         print(f"{letter:^5}", end="|")
     print("")
-    print("--------------"+"------"*num_symbole)
+    print("-----------------"+"------"*num_symbole)
 
     index = 0
     for each in table_etat:
 
         print(f"|{etats_sorties[index]:^5}", end="| ")
-        print(f"{each:^4}", end=" |")
+        print(f"{each:^7}", end=" |")
         for i in matrice_déterminisation[index]:
             print(f"{i:^5}", end="|")
         print("")
         index += 1
-    print("--------------"+"------"*num_symbole)
+    print("-----------------"+"------"*num_symbole)
 
 #Les états entrees et sorties déterministe
 def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe):
