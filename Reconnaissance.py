@@ -12,7 +12,7 @@ def reconnaissance_mots(nouveaux_etats, mot, table_transition, etat_sorties,nbr_
     #Parcourir le mot par la table de transition
     for i in range(len(mot)):
 
-        if (ord(mot[i])-97) >= nbr_symbole:
+        if (ord(mot[i])-97) >= nbr_symbole or (ord(mot[i])-97) < 0:
 
             print("Le mot n'est pas connaissable par l'automate")
             return

@@ -55,7 +55,8 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
                     nouvelle_matrix_vide[index][i] += table_matrix[each][i]
 
         for each in range(num_symbole):
-            if nouvelle_matrix_vide[index][each] not in table_etat:
+            nouvelle_matrix_vide[index][each] = ''.join(sorted(nouvelle_matrix_vide[index][each]))
+            if nouvelle_matrix_vide[index][each] not in table_etat and nouvelle_matrix_vide[index][each] != "":
                 table_etat.append(nouvelle_matrix_vide[index][each])
 
         index += 1
@@ -67,10 +68,16 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
 
 def compléter_etat_poubelle(table_matrix, table_etat, num_symbole):
 
+    trigger = 0
+
     for each in range(len(table_matrix)):
         for i in range(len(table_matrix[each])):
             if table_matrix[each][i] == '':
                 table_matrix[each][i] = 'P'
+                trigger = 1
+
+    if trigger == 0:
+        return table_matrix
 
     table_etat.append("P")
     transition_poubelle = []
