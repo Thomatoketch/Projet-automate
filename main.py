@@ -118,7 +118,7 @@ nouvelle_matrice_déterminisation = determinisation_bis(table_entrée_sortie, nb
 nouveaux_etats = [str(x) for x in nouvelle_matrice_déterminisation[1]]
 
 #Les états entrees et sorties déterministe
-nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats,nbr_etats)
+nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats)
 #L'état initial
 nouvelle_etats_sorties_déterministe[0] += "E"
 
