@@ -1,24 +1,9 @@
+from fonction import *
+
+
 def determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initial, etat_initiaux,
                         etat_finaux,table_transition, numero_automate, complet):
     table_deterministe = [[""] * nbr_symbole for i in range(nbr_etats)]
-    """trigger = 0
-
-    # vérifier si l'automate est déterministe
-    for each in table_transition:
-        if len(etat_initiaux) != 1:
-            trigger = 1
-            break
-        for i in each:
-            if len(i) > 1:
-                trigger = 1
-                break
-        if trigger == 1:
-            break
-
-    if trigger == 0:
-        print(f"L'automate {numero_automate} est déjà déterministe\n\n\n\n")
-        #table_matrix = compléter_etat_poubelle(table_matrix, etats_originaux, num_symbole)
-        return table_deterministe"""
 
     # Déterminiser l'automate
     table_etat = []
@@ -57,7 +42,8 @@ def determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initia
                 table_etat.append(table_deterministe[index][each])
         index += 1
 
-    if complet == 0 :
+
+    if est_complet(table_deterministe) == 0 :
         table_deterministe = compléter_etat_poubelle(table_deterministe, table_etat, nbr_symbole)
 
     return table_deterministe, table_etat
