@@ -1,3 +1,4 @@
+"""
 def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_automate, num_symbole, num_etat):
     trigger = 0
 
@@ -62,6 +63,7 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
     nouvelle_matrix_vide = compléter_etat_poubelle(nouvelle_matrix_vide, table_etat, num_symbole)
 
     return nouvelle_matrix_vide, table_etat
+"""
 
 def compléter_etat_poubelle(table_matrix, table_etat, num_symbole):
 
@@ -82,8 +84,8 @@ def compléter_etat_poubelle(table_matrix, table_etat, num_symbole):
 
 def affichage_table_déterminisation(table_etat, matrice_déterminisation, num_symbole, etats_sorties, indice):
 
-    indice = "déterministe" if indice ==1 else "complément"
-    print(f"\nTable de l'automate {indice} :\n ")
+    indice = "déterministe" if indice ==1 else "complémentaire"
+    print(f"\nTable de l'automate {indice} et complet:\n ")
 
     print("-----------------"+"------"*num_symbole)
     print("|{:^5}|{:^9}|".format("E/S","ETAT"),end="")
