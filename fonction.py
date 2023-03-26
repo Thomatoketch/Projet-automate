@@ -1,13 +1,16 @@
 def est_deterministe (table,nbr_initial):
-    deterministe = False
+    deterministe = 0
     if nbr_initial > 1:
+        deterministe=1
         print("Cet automate n'est pas déterministe car il possède plusieurs états initiaux")
     for i in range (len(table)):
         for j in range (len(table[i])):
-            if len(table[i][j])>1 and deterministe == False:
+            if len(table[i][j])>1 and deterministe == 0:
                 print("Cet automate n'est pas déterministe car il ne possède pas au plus 1 transition pour un état ")
-                deterministe = True
+                deterministe = 1
 
+    if deterministe==0:
+        print("Cet automate est déjà déterministe.")
 
 def est_complet (table):
     k=0
