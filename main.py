@@ -37,8 +37,8 @@ for i in range(nbr_etats):
         table_entrée_sortie[i] += "E"
 
 
-print("les etats initiaux sont :",etat_initiaux)
-print("les etats terminaux sont :",etat_finaux)
+print("Les etats initiaux sont :",etat_initiaux)
+print("Les etats terminaux sont :",etat_finaux)
 
 
 # Créer une table de transition vide
@@ -126,6 +126,19 @@ nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat
 nouvelle_etats_sorties_déterministe[0] += "E"
 
 affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, nouvelle_etats_sorties_déterministe,1)
+
+#complément
+etat_entree_sorties_complement = automate_complément(nouvelle_etats_sorties_déterministe)
+
+#affichage de table complémentaire
+affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, etat_entree_sorties_complement,2)
+
+
+#La reconnaissance de mot
+mot = input("Inserer le mot pour l'automate : ")
+etats_sorties = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats, nbr_etats)
+reconnaissance_mots(nouveaux_etats, mot, nouvelle_matrice_déterminisation[0], etats_sorties, nbr_symbole)
+
 
 
 """
