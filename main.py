@@ -62,9 +62,9 @@ nbr_initial_std = nbr_initial
 print("Voici les informations concernant cet automate:\n")
 est_deterministe(table_transition, nbr_initial)
 if nbr_initial>1:
-    print("Cet automate n'est pas standard car il possède plusieurs entrées\n")
+    print("Cet automate n'est pas standard car il possède plusieurs entrées")
 else:
-    print("Cet automate ne possède qu'une seule entrée, il est donc standard\n")
+    print("Cet automate ne possède qu'une seule entrée, il est donc standard")
 complet = est_complet(table_transition)
 
 # Standardiser l'automate si nécessaire
