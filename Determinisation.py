@@ -1,8 +1,6 @@
 def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_automate, num_symbole, num_etat):
     trigger = 0
 
-
-
     # vérifier si l'automate est déterministe
     for each in table_matrix:
 
@@ -55,8 +53,7 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
                     nouvelle_matrix_vide[index][i] += table_matrix[each][i]
 
         for each in range(num_symbole):
-            nouvelle_matrix_vide[index][each] = ''.join(sorted(nouvelle_matrix_vide[index][each]))
-            if nouvelle_matrix_vide[index][each] not in table_etat and nouvelle_matrix_vide[index][each] != "":
+            if nouvelle_matrix_vide[index][each] not in table_etat:
                 table_etat.append(nouvelle_matrix_vide[index][each])
 
         index += 1
@@ -68,16 +65,10 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
 
 def compléter_etat_poubelle(table_matrix, table_etat, num_symbole):
 
-    trigger = 0
-
     for each in range(len(table_matrix)):
         for i in range(len(table_matrix[each])):
             if table_matrix[each][i] == '':
                 table_matrix[each][i] = 'P'
-                trigger = 1
-
-    if trigger == 0:
-        return table_matrix
 
     table_etat.append("P")
     transition_poubelle = []
@@ -113,26 +104,23 @@ def affichage_table_déterminisation(table_etat, matrice_déterminisation, num_s
         index += 1
     print("-----------------"+"------"*num_symbole)
 
-#Les états entrees et sorties déterministe
-def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe):
 
-    etats_entree_sorties_déterministe = []
-    toggle = 0
+#Les états entrees et sorties déterministe
+def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe,nbr_etat):
+
+    etats_entree_sorties_déterministe = [''] * len(table_etat_déterministe)
 
     for each in etat_sortie:
         each = str(each)
         index = 0
+        h = 0
         for i in table_etat_déterministe:
 
-            if toggle == 0:
-                if each in i:
-                    etats_entree_sorties_déterministe.append("S")
-                else:
-                    etats_entree_sorties_déterministe.append("")
+            if each in i:
+                etats_entree_sorties_déterministe[h] = "S"
             elif each in i and etats_entree_sorties_déterministe[index] == "":
-
                     etats_entree_sorties_déterministe[index] += "S"
-        toggle = 1
+            h+=1
 
     return etats_entree_sorties_déterministe
 
