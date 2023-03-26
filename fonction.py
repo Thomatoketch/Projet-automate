@@ -5,7 +5,7 @@ def est_deterministe (table,nbr_initial):
     for i in range (len(table)):
         for j in range (len(table[i])):
             if len(table[i][j])>1 and deterministe == False:
-                print("Cet automate n'est pas déterministe car il possède plus d'une transition pour un état ")
+                print("Cet automate n'est pas déterministe car il ne possède pas au plus 1 transition pour un état ")
                 deterministe = True
 
 
@@ -16,9 +16,11 @@ def est_complet (table):
             if table[i][j]=='':
                 k=k+1
     if k>0:
-        print("Cet automate n'est pas complet car il possède des états vides ")
+        print("cet automate n'est pas complet car il possède des états vides ")
+        return 0
     else:
         print("Cet automate est complet")
+        return 1
 
 
 def affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_std,std):
@@ -31,7 +33,7 @@ def affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table
     print("------+" + "+".join(["------" for i in range(nbr_symbole + 1)]) + "-")
 
     for g in range(nbr_etats):
-        if g == nbr_etats-1 and nbr_initial == 1:
+        if g == nbr_etats-1 and nbr_initial == 1 and std == 1:
             break
         print(f"|{table_entrée_sortie[g]:^5}", end="| ")
         if g == nbr_etats-1 and std == 1:
