@@ -59,6 +59,14 @@ etat_initiaux_std = etat_initiaux
 etat_finaux_std = etat_finaux
 nbr_initial_std = nbr_initial
 
+print("Voici des informations concernant cet automate:\n")
+est_deterministe(table_transition, nbr_initial)
+if nbr_initial>1:
+    print("Cet automate n'est pas standard car il possède plusieurs entrées\n")
+else:
+    print("Cet automate est standard car il possède exactement une entrée\n")
+complet = est_complet(table_transition)
+
 # Standardiser l'automate si nécessaire
 if nbr_initial > 1:
     rep = input("si vous voulez standardiser votre automate, tapez oui : ")
@@ -114,8 +122,7 @@ if nbr_initial > 1:
         affichage_table(nbr_etats_std,table_entrée_sortie_std,nbr_initial_std,nbr_symbole,table_std,1)
 
 
-est_deterministe(table_transition, nbr_initial)
-complet = est_complet(table_transition)
+
 
 nouvelle_matrice_déterminisation = determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initial, etat_initiaux, etat_finaux,table_transition,numero,complet)
 nouveaux_etats = [str(x) for x in nouvelle_matrice_déterminisation[1]]
