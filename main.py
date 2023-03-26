@@ -59,12 +59,12 @@ etat_initiaux_std = etat_initiaux
 etat_finaux_std = etat_finaux
 nbr_initial_std = nbr_initial
 
-print("Voici des informations concernant cet automate:\n")
+print("Voici les informations concernant cet automate:\n")
 est_deterministe(table_transition, nbr_initial)
 if nbr_initial>1:
     print("Cet automate n'est pas standard car il possède plusieurs entrées\n")
 else:
-    print("Cet automate est standard car il possède exactement une entrée\n")
+    print("Cet automate ne possède qu'une seule entrée, il est donc standard\n")
 complet = est_complet(table_transition)
 
 # Standardiser l'automate si nécessaire
@@ -124,27 +124,32 @@ if nbr_initial > 1:
 
 
 
-nouvelle_matrice_déterminisation = determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initial, etat_initiaux, etat_finaux,table_transition,numero,complet)
-nouveaux_etats = [str(x) for x in nouvelle_matrice_déterminisation[1]]
 
-#Les états entrees et sorties déterministe
-nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats,nbr_etats)
-#L'état initial
-nouvelle_etats_sorties_déterministe[0] += "E"
+rep2=input("Si vous voulez déterminiser et ensuite compléter votre automate, tapez oui: ")
+if rep2=="oui":
+    nouvelle_matrice_déterminisation = determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initial, etat_initiaux, etat_finaux,table_transition,numero,complet)
+    nouveaux_etats = [str(x) for x in nouvelle_matrice_déterminisation[1]]
 
-affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, nouvelle_etats_sorties_déterministe,1)
+    #Les états entrees et sorties déterministe
+    nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats,nbr_etats)
+    #L'état initial
+    nouvelle_etats_sorties_déterministe[0] += "E"
 
-#complément
-etat_entree_sorties_complement = automate_complément(nouvelle_etats_sorties_déterministe)
+    affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, nouvelle_etats_sorties_déterministe,1)
 
-#affichage de table complémentaire
-affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, etat_entree_sorties_complement,2)
+rep3=input("Si vous souhaitez savoir si un mot est reconnu par votre automate, tapez oui: ")
+if rep3=="oui":
+    #La reconnaissance de mot
+    mot = input("Inserer le mot que vous souhaitez rechercher : ")
+    etats_sorties = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats, nbr_etats)
+    reconnaissance_mots(nouveaux_etats, mot, nouvelle_matrice_déterminisation[0], etats_sorties, nbr_symbole)
 
-
-#La reconnaissance de mot
-mot = input("Inserer le mot pour l'automate : ")
-etats_sorties = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats, nbr_etats)
-reconnaissance_mots(nouveaux_etats, mot, nouvelle_matrice_déterminisation[0], etats_sorties, nbr_symbole)
+rep4=input("Si vous souhaitez afficher la table qui reconnait le langage complémentaire de votre automate, tapez oui: ")
+if rep4=="oui":
+    #complément
+    etat_entree_sorties_complement = automate_complément(nouvelle_etats_sorties_déterministe)
+    #affichage de table complémentaire
+    affichage_table_déterminisation(nouveaux_etats, nouvelle_matrice_déterminisation[0], nbr_symbole, etat_entree_sorties_complement,2)
 
 
 
