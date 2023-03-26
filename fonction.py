@@ -16,10 +16,10 @@ def est_complet (table):
             if table[i][j]=='':
                 k=k+1
     if k>0:
-        print("cet automate n'est pas complet car il possède des états vides ")
+        print("cet automate n'est pas complet car il possède des états vides \n")
         return 0
     else:
-        print("Cet automate est complet")
+        print("Cet automate est complet\n")
         return 1
 
 
