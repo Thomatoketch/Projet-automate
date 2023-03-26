@@ -55,20 +55,23 @@ for i in range(nbr_transition):
 print("Table de transition:")
 affichage_table(nbr_etats,table_entrée_sortie,nbr_initial,nbr_symbole,table_transition,0)
 
+etat_initiaux_std = etat_initiaux
+etat_finaux_std = etat_finaux
+nbr_initial_std = nbr_initial
 
 # Standardiser l'automate si nécessaire
 if nbr_initial > 1:
     rep = input("si vous voulez standardiser votre automate, tapez oui : ")
     if rep == "oui" :
         for i in range(nbr_initial):
-            if etat_initiaux[i] in etat_finaux:
+            if etat_initiaux_std[i] in etat_finaux:
                 etat_finaux.append("i")
 
         for i in range(6,len(lignes)):
-            for j in etat_initiaux:
+            for j in etat_initiaux_std:
                 if lignes[i][0] == str(j) :
                     lignes.append("\ni"+lignes[i][1:3])
-        etat_initiaux = ["i"]
+        etat_initiaux_std = ["i"]
 
         with open("Fichier TXT STD/F3-" + numero + "-std.txt", "w") as fichier:
             if nbr_initial > 1 :
@@ -108,7 +111,7 @@ if nbr_initial > 1:
 
 
         print("\nTable de la matrice standardisée : ")
-        affichage_table(nbr_etats_std,table_entrée_sortie_std,nbr_initial,nbr_symbole,table_std,1)
+        affichage_table(nbr_etats_std,table_entrée_sortie_std,nbr_initial_std,nbr_symbole,table_std,1)
 
 
 est_deterministe(table_transition, nbr_initial)
@@ -118,7 +121,7 @@ nouvelle_matrice_déterminisation = determinisation_bis(table_entrée_sortie, nb
 nouveaux_etats = [str(x) for x in nouvelle_matrice_déterminisation[1]]
 
 #Les états entrees et sorties déterministe
-nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats)
+nouvelle_etats_sorties_déterministe = trouver_entree_sorties_déterministe(etat_finaux, nouveaux_etats,nbr_etats)
 #L'état initial
 nouvelle_etats_sorties_déterministe[0] += "E"
 
