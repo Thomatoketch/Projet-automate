@@ -3,7 +3,7 @@ from fonction import *
 
 def determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initial, etat_initiaux,
                         etat_finaux,table_transition, numero_automate, complet):
-    table_deterministe = [[""] * nbr_symbole for i in range(nbr_etats)]
+    table_deterministe = []
 
     # Déterminiser l'automate
     table_etat = []
@@ -22,7 +22,7 @@ def determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initia
     # Remplir la matrice
     index = 0
     while (index < len(table_etat)):
-
+        table_deterministe.append(['']*nbr_symbole)
         # transformer str en int
         #buffer = list(set([int(x) for x in table_etat[index]]))
         buffer = [int(x) for x in table_etat[index]]
@@ -34,9 +34,8 @@ def determinisation_bis(table_entrée_sortie, nbr_symbole, nbr_etats, nbr_initia
                             table_deterministe[index][i] += table_transition[each][i]
                 else:
                     if table_transition[each][i] != "":
-                        table_deterministe.append(["" for each in range(num_symbole)])
+                        table_deterministe.append(["" for each in range(nbr_symbole)])
                         table_deterministe[index][i] += table_transition[each][i]
-
         for each in range(nbr_symbole):
             if table_deterministe[index][each] not in table_etat and table_deterministe[index][each] != "":
                 table_etat.append(table_deterministe[index][each])
