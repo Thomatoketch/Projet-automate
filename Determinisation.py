@@ -65,17 +65,17 @@ def determinisation(etat_initiaux, table_matrix, nouvelle_matrix_vide, numero_au
     return nouvelle_matrix_vide, table_etat
 """
 
-def compléter_etat_poubelle(table_matrix, table_etat, num_symbole):
+def compléter_etat_poubelle(table_matrix, table_etat, num_symbole): 
 
-    for each in range(len(table_matrix)):
+    for each in range(len(table_matrix)):               #ajouter 'P' dans la table de transitions
         for i in range(len(table_matrix[each])):
             if table_matrix[each][i] == '':
                 table_matrix[each][i] = 'P'
 
-    table_etat.append("P")
+    table_etat.append("P")                              #ajouter 'P' dans la table des états initiaux
     transition_poubelle = []
     for each in range(num_symbole):
-        transition_poubelle.append("P")
+        transition_poubelle.append("P")                 #ajouter 'P' dans les états de transitions de l'état P
 
     table_matrix.append(transition_poubelle)
     return table_matrix
@@ -108,7 +108,8 @@ def affichage_table_déterminisation(table_etat, matrice_déterminisation, num_s
 
 
 #Les états entrees et sorties déterministe
-def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe,nbr_etat):
+def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe,nbr_etat): #D'abord compléter avec des 'S' en langage normal.
+                                                                                        #Ensuite ajouter un 'E'dans le main à la première case
 
     etats_entree_sorties_déterministe = [''] * len(table_etat_déterministe)
 
@@ -126,7 +127,7 @@ def trouver_entree_sorties_déterministe(etat_sortie, table_etat_déterministe,n
 
     return etats_entree_sorties_déterministe
 
-def automate_complément(etat_entree_sortie):
+def automate_complément(etat_entree_sortie):                                           #Enfin, inverser le résultat pour le langage complémentaire
 
     index = 0
     for each in etat_entree_sortie:
